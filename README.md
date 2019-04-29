@@ -2,17 +2,22 @@
 # Dependent Landmark Drift
 
 This is an implementation of a point matching algorithm, dependent landmark drift (DLD). 
-Details of the algorithm are available at https://arxiv.org/abs/1711.06588
+Details of the algorithm are available [here](https://arxiv.org/abs/1711.06588).
+
+
+## Demo
+
+Demo movies are available [here](https://youtu.be/3sDNes4n_RY). If you are a MATLAB user,
+demo codes can be executed by following the instructions included in `Body`, `Hand`, and
+`Face` folders.
 
 ## Usage 
 
-Type the following command in the terminal window.
+Type the following command in the terminal window:
 
 ` dld <target: X> <model: shape variations> <model: mean shape> (+options) `
 
-- Some instructions are printed by typing `dld` in the terminal window.
-- If you are a MATLAB user, demo codes can be executed by following the instructions
-  included in `Body`, `Hand`, and `Face` folders.
+Some instructions are printed by typing `dld` in the terminal window.
 
 ### Terms and symbols
 
