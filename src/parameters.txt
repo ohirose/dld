@@ -1,0 +1,16 @@
+
+omega	0.9           ## noise probability,  (0,1).
+gamma	1e-4          ## regulization, positive.
+conv	1e-5          ## convergence radius, positive.
+error	0             ## ifgt error bound, positive. direct computation if zero.
+nloop	1000          ## the maximum number of optimization loops.
+cmaes   0             ## pose estimation by cma-es if positive.
+seed    1             ## rondom number seed used by cma-es.
+snlp    50            ## the maximum number of dld iteration during cma-es.
+verb	1             ## verbose if positive; silent if zero.
+save    1             ## save optimization path if positive.
+layout  0             ## toggle layout mode of the model file 'mu' and 'H'.
+rigid   0             ## initial alignment by rigid CPD if positive
+pose    1             ## dld with pose estimation if positive.
+fout    result.txt    ## output file name
+

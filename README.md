@@ -4,20 +4,59 @@
 This is an implementation of a point matching algorithm, dependent landmark drift (DLD). 
 Details of the algorithm are available [here](https://arxiv.org/abs/1711.06588).
 
-
 ## Demo
 
-Demo movies are available [here](https://youtu.be/3sDNes4n_RY). If you are a MATLAB user,
+Demo movies are available [here](https://youtu.be/3sDNes4n_RY). If you are a MATLAB (Windows) user,
 demo codes can be executed by following the instructions included in `Body`, `Hand`, and
 `Face` folders.
 
+## Preparation: shape model construction
+
+Statistical shape models used as shape prior information MUST be constructed before execution.
+The construction of a statistical shape model might be technical especially if source datasets
+are images or point clouds without point-by-point correspondence. For these cases,
+see [one](http://www.sciencedirect.com/science/article/pii/S1361841509000425) of review papers,
+for example. If source datasets are set of points of correspondence, the construction of the
+statistical shape model is simple. For example, the PCA-based statistical shape model is
+constructed as follows.
+
+1. Pre-align shapes for removing shape variations originated from the rigid transformation of objects.
+2. Convert a point set corresponding to an object shape into a single vector.
+3. Compute the mean shape as the sample average of shape vectors.
+4. Compute the covariance matrix of shape vectors.
+5. Output the mean shape and eigenvectors (+ eigenvalues if needed).
+   Shape variations of the object geometry are represented as eigenvectors.
+
+Please see `trainingHand.m` in the `Hand` folder, for example, to construct a statistical shape model
+from point sets with point-by-point correspondence.
+
+## Compilation
+
+### MacOS and Linux
+
+1. Install the LAPACK library if not installed.
+2. Download the zip file that includes source codes and uncompress it.
+3. Move into the root directory of the uncompressed folder using the terminal window.
+4. Type `make` in the terminal window.
+
+OpenMP can be used if your MacOS is quite old, e.g., 10.11. Install `gcc-mp-6` and
+replace `make` with `make CFLAGS=-DUSE_OPENMP CC=gcc-mp-6`.
+
+### Windows
+
+Not required. Use the binary file in this repository.
+
 ## Usage 
 
-Type the following command in the terminal window:
+For MacOS and Linux, type the following command in the terminal window.
+
+` ./dld <target: X> <model: shape variations> <model: mean shape> (+options) `
+
+For Windows, type the following command in the DOS prompt.
 
 ` dld <target: X> <model: shape variations> <model: mean shape> (+options) `
 
-Some instructions are printed by typing `dld` in the terminal window.
+Some instructions are printed by typing `./dld` in the terminal window, or `dld` in the DOS prompt.
 
 ### Terms and symbols
 
@@ -33,9 +72,9 @@ Some instructions are printed by typing `dld` in the terminal window.
 - 2nd argument: The matrix of size MD x K corresponding to shape variations.
 - 3rd argument: The mean shape represented as a vector of size MD.
 
-Only tab-separated files are accepted. A column of the matrix required for the 3rd argument 
+Only tab-separated files are accepted. A column of the matrix required for the 3rd argument
 MUST be the eigenvector multiplied by the square root of the corresponding eigenvalue.
-The multiplication of the eigenvalue are required for imposing the Tikonov regularizer 
+The multiplication of the eigenvalue are required for imposing the Tikhonov regularizer
 which plays a role in the smooth displacement field.
 
 ### Parameters
@@ -50,7 +89,6 @@ which plays a role in the smooth displacement field.
 - `-l`: Toggle layout. Read the 2nd and 3rd arguments in the order of xyzxyz instead of xxyyzz.
 - `-q`: Quiet mode. Print nothing.
 - `-s`: Save the optimization path.
-- `-a`: Turn on CMA-ES. An optional search strategy (time-consuming).
 - `-v`: Print the version of this software.
 
 ### Configurations
